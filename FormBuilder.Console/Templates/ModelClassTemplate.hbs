@@ -1,0 +1,22 @@
+﻿using System;
+using System.Data;
+
+namespace {{PackageName}}.Models 
+{
+    public class {{Name}}Item
+    {
+        {{#each Fields}}
+        public {{Type}}{{#if IsNullable}}?{{/if}} {{Name}} { get; set; } 
+        {{/each}}
+
+        public static {{Name}}Item FromDataRow(DataRow dr)
+        {
+            return new {{Name}}Item
+            {
+                {{#each Fields}}
+                {{Name}} = dr["{{Name}}"] == DBNull.Value ? default({{Type}}{{#if IsNullable}}?{{/if}}): ({{Type}}{{#if IsNullable}}?{{/if}}) dr["{{Name}}"]{{#unless @last}},{{/unless}}
+                {{/each}}
+            };
+        }
+    }
+}

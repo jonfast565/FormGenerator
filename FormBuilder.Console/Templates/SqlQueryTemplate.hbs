@@ -1,0 +1,51 @@
+﻿using System;
+using System.Data;
+using System.Linq;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
+namespace {{Name}}.DataAccess 
+{
+    public static class SqlExtensions 
+    {
+        public static async Task<SqlConnection> BuildAndOpenConnectionAsync(this string connectionString)
+        {
+            var conn = new SqlConnection(connectionString);
+            await conn.OpenAsync();
+            return conn;
+        }
+
+        public static async Task<DataTable> RunSqlQueryAsync(this SqlConnection connection, string query,
+            CommandType type = CommandType.Text,
+            IList<SqlParameter> parameters = null)
+        {
+            using (var command = new SqlCommand(query, connection))
+            {
+                if (parameters != null && parameters.Count > 0) 
+                {
+                    foreach (var parameter in parameters) 
+                    {
+                        command.Parameters.Add(parameter);
+                    }
+                }
+                
+                command.CommandType = type;
+                command.Prepare();
+                var table = new DataTable();
+                var adapter = new SqlDataAdapter(command);
+                await Task.Run(() => adapter.Fill(table));
+                return table;
+            }
+        }
+
+    	public static IList<T> Transform<T>(this DataTable table, Func<DataRow, T> transform)
+	    {
+		    return table
+			    .Select()
+			    .AsParallel()
+			    .Select(transform)
+			    .ToList();
+	    }
+    }
+}

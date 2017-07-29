@@ -1,0 +1,34 @@
+﻿using System;
+using System.Threading.Tasks;
+
+namespace {{Name}}.Models
+{
+    public class ApiResult<T>
+    {
+        public T Result { get; set; }
+        public Exception Error { get; set; }
+
+        public ApiResult(T value)
+        {
+            Result = value;
+        }
+
+        public ApiResult(Exception e)
+        {
+            Error = e;
+        }
+
+        public static async Task<ApiResult<T>> RunApiQueryAsync(Func<Task<T>> toRun)
+        {
+            try
+            {
+                var result = await toRun();
+                return new ApiResult<T>(result);
+            }
+            catch (Exception e)
+            {
+                return new ApiResult<T>(e);
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "{{Name}} Landing Page";
+}
+
+<pre>
+Welcome to {{Name}}
+-----------------------
+
+API Functions:
+
+    {{#each Endpoints}}
+    {{#if Parameters}}
+    - {{Name}} -> GET /api/{{Name}}? [query params...]
+        {{#each Parameters}}
+        - {{Name}}: {{TypeName}}{{#if IsNullable}}?{{/if}} {{#unless @last}}&amp;{{/unless}}
+        {{/each}}
+
+    {{else}}
+    - {{Name}} API -> GET /api/{{Name}}
+
+    {{/if}}
+    {{/each}}
+-----------------------
+</pre>

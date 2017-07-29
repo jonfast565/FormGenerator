@@ -1,0 +1,8 @@
+﻿<!-- Api Package is root -->
+<configuration>
+    <connectionStrings>
+        {{#each DatabaseConnections}}
+        <add name="{{@key}}" connectionString="{{this}}" />
+        {{/each}}
+    </connectionStrings>
+</configuration>

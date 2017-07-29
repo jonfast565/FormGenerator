@@ -1,0 +1,144 @@
+﻿{
+  "ApiPackage": {
+    "Name": "Api",
+    "OutputFolder": "C:\\Users\\jfast\\Desktop\\Api",
+    "ApiRootUrl": "api",
+    "DatabaseConnections": {
+      "ExampleSqlServerDb": "Data Source=blah;Initial Catalog=master;Integrated Security=True"
+    },
+    "Templates": [
+      {
+        "Name": "Api Controller Template",
+        "OutputFolder": "./Controllers",
+        "Path": "./Templates/ApiControllerTemplate.hbs",
+        "Filename": "{{Name}}Controller.cs",
+        "Scope": "ApiEndpoint"
+      },
+      {
+        "Name": "Data Access Implementation Template",
+        "OutputFolder": "./DataAccess/Implementation",
+        "Path": "./Templates/DataAccessImplementationTemplate.hbs",
+        "Filename": "{{Name}}DataAccess.cs",
+        "Scope": "ApiEndpoint"
+      },
+      {
+        "Name": "Data Access Interface Template",
+        "OutputFolder": "./DataAccess/Interfaces",
+        "Path": "./Templates/DataAccessInterfaceTemplate.hbs",
+        "Filename": "I{{Name}}DataAccess.cs",
+        "Scope": "ApiEndpoint"
+      },
+      {
+        "Name": "Model Class Template",
+        "OutputFolder": "./Models",
+        "Path": "./Templates/ModelClassTemplate.hbs",
+        "Filename": "{{Name}}Model.cs",
+        "Scope": "ApiEndpoint"
+      },
+      {
+        "Name": "App Config Template",
+        "OutputFolder": "./",
+        "Path": "./Templates/AppConfigTemplate.hbs",
+        "Filename": "App.config",
+        "Scope": "ApiPackage"
+      },
+      {
+        "Name": "Sql Query Template",
+        "OutputFolder": "./DataAccess",
+        "Path": "./Templates/SqlQueryTemplate.hbs",
+        "Filename": "SqlQuery.cs",
+        "Scope": "ApiPackage"
+      },
+      {
+        "Name": "Project File Template",
+        "OutputFolder": "./",
+        "Path": "./Templates/ProjectFileTemplate.hbs",
+        "Filename": "{{Name}}.csproj",
+        "Scope": "ApiPackage"
+      },
+      {
+        "Name": "Solution File Template",
+        "OutputFolder": "./",
+        "Path": "./Templates/SolutionFileTemplate.hbs",
+        "Filename": "{{Name}}.sln",
+        "Scope": "ApiPackage"
+      },
+      {
+        "Name": "Main File",
+        "OutputFolder": "./",
+        "Path": "./Templates/MainFileTemplate.hbs",
+        "Filename": "Program.cs",
+        "Scope": "ApiPackage"
+      },
+      {
+        "Name": "Startup File",
+        "OutputFolder": "./",
+        "Path": "./Templates/StartupFileTemplate.hbs",
+        "Filename": "Startup.cs",
+        "Scope": "ApiPackage"
+      },
+      {
+        "Name": "Index Page",
+        "OutputFolder": "./Views/Home",
+        "Path": "./Templates/IndexPageTemplate.hbs",
+        "Filename": "Index.cshtml",
+        "Scope": "ApiPackage"
+      },
+      {
+        "Name": "Index Page Controller",
+        "OutputFolder": "./Controllers",
+        "Path": "./Templates/HomeControllerTemplate.hbs",
+        "Filename": "HomeController.cs",
+        "Scope": "ApiPackage"
+      },
+      {
+        "Name": "View Start Page",
+        "OutputFolder": "./Views",
+        "Path": "./Templates/ViewStartPageTemplate.hbs",
+        "Filename": "_ViewStart.cshtml",
+        "Scope": "ApiPackage"
+      },
+      {
+        "Name": "Layout Page",
+        "OutputFolder": "./Views/Shared",
+        "Path": "./Templates/LayoutPageTemplate.hbs",
+        "Filename": "_Layout.cshtml",
+        "Scope": "ApiPackage"
+      },
+      {
+        "Name": "ApiResult Class Template",
+        "OutputFolder": "./Models",
+        "Path": "./Templates/ApiResultTemplate.hbs",
+        "Filename": "ApiResult.cs",
+        "Scope": "ApiPackage"
+      },
+      {
+        "Name": "AppSettings Json Template",
+        "OutputFolder": "./",
+        "Path": "./Templates/AppSettingsTemplate.hbs",
+        "Filename": "appsettings.json",
+        "Scope": "ApiPackage" 
+      }
+    ],
+    "Endpoints": [
+      {
+        "Name": "SomeCoolEndpoint1",
+        "SqlQuery": {
+          "Query": "./SavedQueries/Example.sql",
+          "QuerySource": "File",
+          "CommandType": "Text",
+          "Connection": "ExampleSqlServerDb"
+        }
+      },
+      {
+        "Name": "DoCoolTaskEndpoint1",
+        "SqlQuery": {
+          "Query": "dbo.DoCoolTask",
+          "QuerySource": "Inline",
+          "CommandType": "StoredProcedure",
+          "Connection": "ExampleSqlServerDb"
+        }
+      }
+    ]
+  }
+}

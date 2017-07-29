@@ -1,0 +1,36 @@
+﻿using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using {{PackageName}}.Models;
+using {{PackageName}}.DataAccess.Interfaces;
+
+namespace {{PackageName}}.Controllers
+{
+    [Route("api/[controller]")]
+    public class {{Name}}Controller : Controller
+    {
+        public I{{Name}}DataAccess DataAccess { get; }
+
+        public {{Name}}Controller(I{{Name}}DataAccess dataAccess) 
+        {
+            DataAccess = dataAccess;
+        }
+
+        [HttpGet]
+        public async Task<ApiResult<IList<{{Name}}Item>>> Get(
+        {{#each Parameters}}
+            {{TypeName}}{{#if IsNullable}}?{{/if}} {{Name}} {{#unless @last}},{{/unless}}
+        {{/each}}
+        )
+        {
+            var f = new Func<Task<IList<{{Name}}Item>>>(
+                () => DataAccess.Get{{Name}}ItemsAsync(
+                {{#each Parameters}}
+                    {{Name}} {{#unless @last}},{{/unless}}
+                {{/each}}                
+            ));
+            return await ApiResult<IList<{{Name}}Item>>.RunApiQueryAsync(f);
+        }
+    }
+}

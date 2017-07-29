@@ -1,0 +1,15 @@
+﻿using System.Threading.Tasks;
+using System.Collections.Generic;
+using {{PackageName}}.Models;
+
+namespace {{PackageName}}.DataAccess.Interfaces 
+{
+    public interface I{{Name}}DataAccess
+    {
+        Task<IList<{{Name}}Item>> Get{{Name}}ItemsAsync(
+            {{#each Parameters}}
+            {{TypeName}}{{#if IsNullable}}?{{/if}} {{Name}}{{#unless @last}},{{/unless}}
+            {{/each}}
+        );
+    }
+}

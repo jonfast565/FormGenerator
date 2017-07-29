@@ -1,0 +1,49 @@
+﻿using System.Data;
+using System.Linq;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using {{PackageName}}.Models;
+using {{PackageName}}.DataAccess.Interfaces;
+
+namespace {{PackageName}}.DataAccess.Implementation
+{
+    public class {{Name}}DataAccess : I{{Name}}DataAccess
+    {
+        public string ConnectionString { get; }
+        public CommandType CommandType { get; }
+        public string Query { get; }
+        
+        public {{Name}}DataAccess() 
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["{{Connection}}"].ConnectionString;
+            CommandType = CommandType.{{CommandType}};
+            Query = "{{{Query}}}";
+        }
+        
+        public async Task<IList<{{Name}}Item>> Get{{Name}}ItemsAsync(
+            {{#each Parameters}}
+            {{TypeName}}{{#if IsNullable}}?{{/if}} {{Name}}{{#unless @last}},{{/unless}}
+            {{/each}}
+        )
+        {
+            {{#if Parameters}}
+            var parameters = new [] 
+            {
+                {{#each Parameters}}
+                new SqlParameter("{{DatabaseParameterName}}", SqlDbType.{{DatabaseType}}) { Value = {{Name}} }{{#unless @last}},{{/unless}}
+                {{/each}}
+            }.ToList();
+
+            {{/if}}
+            var connection = await ConnectionString.BuildAndOpenConnectionAsync();
+            {{#if Parameters}}
+            var queryResult = await connection.RunSqlQueryAsync(Query, CommandType, parameters);
+            {{else}}
+            var queryResult = await connection.RunSqlQueryAsync(Query, CommandType);
+            {{/if}}
+            return queryResult.Transform({{Name}}Item.FromDataRow);
+        }
+    }
+}
