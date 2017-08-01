@@ -27,6 +27,12 @@ namespace {{Name}}
             // mvc
             services.AddMvc();
 
+            // pretty print output to browser
+            services.AddJsonOptions(options =>
+		    {
+		        options.SerializerSettings.Formatting = Formatting.Indented;
+		    });
+
             // access layer injectors
             {{#each Endpoints}}
             services.AddTransient<I{{Name}}DataAccess, {{Name}}DataAccess>();
